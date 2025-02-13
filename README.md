@@ -1,0 +1,2 @@
+Neetcode 75 Solutions
+This repository contains my Python solutions for the Neetcode 75 problems. Each solution is organized by category (e.g., Arrays, Stacks, Two Pointers), and includes a brief explanation of the approach used. The goal is to practice coding, document problem-solving strategies, and provide easy-to-understand references for each challenge.
