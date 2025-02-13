@@ -19,10 +19,10 @@ def two_sum(nums: List[int], target: int) -> List[int]:
     Time Complexity: O(n)
     Space Complexity: O(n)
     """
-    seen = {}
+    prevmap = {}
     for i, num in enumerate(nums):
         diff = target - num
-        if diff in seen:
-            return [seen[diff], i]
-        seen[num] = i
+        if diff in prevmap:
+            return [prevmap[diff], i]
+        prevmap[num] = i
     return []
