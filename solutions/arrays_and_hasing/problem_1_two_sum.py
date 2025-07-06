@@ -11,18 +11,13 @@ Constraints:
 
 from typing import List
 
-def two_sum(nums: List[int], target: int) -> List[int]:
-    """
-    This function takes an array of integers (nums) and a target integer,
-    and returns the indices of the two numbers that add up to the target.
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
 
-    Time Complexity: O(n)
-    Space Complexity: O(n)
-    """
-    prevmap = {}
-    for i, num in enumerate(nums):
-        diff = target - num
-        if diff in prevmap:
-            return [prevmap[diff], i]
-        prevmap[num] = i
-    return []
+        prevMap = {}
+        for i, n in enumerate(nums):
+            diff = target - n
+            if diff in prevMap:
+                return [prevMap[diff], i]
+            prevMap[n] = i
+        return
