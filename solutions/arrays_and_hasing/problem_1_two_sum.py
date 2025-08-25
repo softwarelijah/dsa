@@ -14,10 +14,17 @@ from typing import List
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
 
-        prevMap = {}
-        for i, n in enumerate(nums):
-            diff = target - n
-            if diff in prevMap:
-                return [prevMap[diff], i]
-            prevMap[n] = i
-        return
+        # dictionary to store {number: index}
+        seen = {}
+
+        # loop through array once
+        for i, num in enumerate(nums):
+            complement = target - num
+
+            # if complement exists, we found the solution
+            if complement in seen:
+                return [seen[complement], i]
+
+            # otherwise, store current number with its index
+            seen[num] = i
+
