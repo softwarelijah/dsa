@@ -1,39 +1,37 @@
+from collections import Counter
+import heapq  # need to import this for nlargest to work
+
 class Solution(object):
     def topKFrequent(self, nums, k):
         """
         :type nums: List[int]
         :type k: int
         :rtype: List[int]
+
+        Time Complexity:
+            - Building the Counter: O(n), where n = len(nums)
+            - heapq.nlargest on m unique elements: O(m log k), 
+              where m is the number of distinct numbers
+            - Overall: O(n + m log k)
+              (since m ≤ n, this is effectively O(n log k) in the worst case)
+
+        Space Complexity:
+            - O(m) for the Counter (hashmap storing frequency counts)
+            - O(k) for the heap created by nlargest
+            - Overall: O(m + k)
         """
 
-        count = {} # create an empty dictionary to store counts of each number
-        # looping through each number in the input list
-        for num in nums:
-            # for each number, update its frequency
-            # - count.get(num, 0) returns the current count if it exists, otherwise 0
-            # add 1 to increment the count
-            count[num] = 1 + count.get(num, 0)
+        # If k equals the size of nums, then every number is frequent,
+        # so just return the original nums list
+        if k == len(nums):
+            return nums
 
-        # create an empty list to hold [frequency, number] pairs
-        arr =[]
+        # Count the frequency of each number in nums
+        # Example: nums = [1,1,1,2,2,3] → Counter = {1:3, 2:2, 3:1}
+        count = Counter(nums)
 
-        #iterate through each (num, cnt) pair from the dictionary
-        for num, cnt in count.items():
-            # append the pair as [count, num] so we can sort by count
-            arr.append([cnt, num])
-            # sort the list of count [count, num] pairs in ascending order by default
-            # after sorting, elements with smaller counts are at the front
-        arr.sort()
-
-        # prepare a result list to collect the top k frequent elements
-        res = []
-
-        # keep adding the frequent elements until we have k of them
-        while len(res) < k:
-
-            # arr.pop() removes the last element in arr (largest count, since arr is sorted ascending)
-            # [1] selects the number part (not the count)
-            res.append(arr.pop()[1])
-
-            # return final list of top k frequent numbers
-        return res
+        # Use heapq.nlargest to get the top k frequent elements
+        # - count.keys() are the unique numbers
+        # - key=count.get means elements are compared by their frequency
+        # Example: topKFrequent([1,1,1,2,2,3], 2) → [1,2]
+        return heapq.nlargest(k, count.keys(), key=count.get)

@@ -1,30 +1,36 @@
-"""
-Problem: Two Sum (LeetCode #1)
-Category: Arrays & Hashing (Neetcode 75)
+class Solution(object):
+    def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
 
-Given an array of integers nums and an integer target,
-return indices of the two numbers such that they add up to target.
+        Time Complexity:
+            - O(n), where n = length of nums
+              We scan through the list once, and each lookup in the hashmap is O(1) on average.
+        Space Complexity:
+            - O(n), since we may store up to n elements in the hashmap (in the worst case).
+        """
 
-Constraints:
-- ...
-"""
+        # Create an empty hashmap (dictionary in Python)
+        # Key   → number from nums
+        # Value → its index in the array
+        hashmap = {}
 
-from typing import List
+        # Iterate through the nums array by index
+        for i in range(len(nums)):
+            # The "complement" is the number we need to reach the target
+            # Example: if target = 9 and nums[i] = 2 → complement = 7
+            complement = target - nums[i]
 
-class Solution:
-    def twoSum(self, nums: List[int], target: int) -> List[int]:
+            # If complement is already in the hashmap, we found a pair
+            # Return the current index and the index of the complement
+            if complement in hashmap:
+                return [i, hashmap[complement]]
 
-        # dictionary to store {number: index}
-        seen = {}
+            # Otherwise, store the current number with its index in the hashmap
+            # So future iterations can find it as a complement
+            hashmap[nums[i]] = i
 
-        # loop through array once
-        for i, num in enumerate(nums):
-            complement = target - num
-
-            # if complement exists, we found the solution
-            if complement in seen:
-                return [seen[complement], i]
-
-            # otherwise, store current number with its index
-            seen[num] = i
-
+        # If no pair is found (problem usually guarantees a solution, but just in case)
+        return []
