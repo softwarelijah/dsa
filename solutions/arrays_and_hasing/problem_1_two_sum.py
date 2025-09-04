@@ -1,30 +1,23 @@
-"""
-Problem: Two Sum (LeetCode #1)
-Category: Arrays & Hashing (Neetcode 75)
+class Solution(object):
+    def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        # create a hashmap
+        # iterate over the number array and keep track of index
+        # create the complement equation
+        # check if the complement is in the hashmap
+        # if the complement is in the hashmap, return the index + the complement
+        # store the current number as a key and its index as the value for future lookups
+        # if nothing is found just return the empty list for the return type requirements
 
-Given an array of integers nums and an integer target,
-return indices of the two numbers such that they add up to target.
 
-Constraints:
-- ...
-"""
-
-from typing import List
-
-class Solution:
-    def twoSum(self, nums: List[int], target: int) -> List[int]:
-
-        # dictionary to store {number: index}
-        seen = {}
-
-        # loop through array once
-        for i, num in enumerate(nums):
-            complement = target - num
-
-            # if complement exists, we found the solution
-            if complement in seen:
-                return [seen[complement], i]
-
-            # otherwise, store current number with its index
-            seen[num] = i
-
+        hashmap = {}
+        for i in range(len(nums)):
+            complement = target - nums[i]
+            if complement in hashmap:
+                return [i, hashmap[complement]]
+            hashmap[nums[i]] = i
+        return []

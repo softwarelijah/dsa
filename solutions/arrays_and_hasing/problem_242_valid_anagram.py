@@ -5,33 +5,31 @@ class Solution(object):
         :type t: str
         :rtype: bool
         """
-        # if the lengths differ, they cannot be anagrams
+        # If the strings are not the same length, they cannot be anagrams
         if len(s) != len(t):
             return False
 
+        # Use two hashmaps (dictionaries) to count character frequencies
+        countS, countT = {}, {}
 
-        count = {} # creating a dictionary to keep track of character counts in s
+        # Iterate through both strings simultaneously
+        for i in range(len(s)):
+            # For each character in s, increment its count in countS
+            countS[s[i]] = 1 + countS.get(s[i], 0)
 
-        # counting the frequency of each character in s
-        for char in s:
-            # if char exist, increment count, otherwise start at 0
-            count[char] = count.get(char, 0) + 1
+            # For each character in t, increment its count in countT
+            countT[t[i]] = 1 + countT.get(t[i], 0)
 
-        # subtract frequency using characters from t
-        for char in t:
-            # if char not found in dictionary: t has an extra character so not an anagram
-            if char not in count:
-                return False
-
-            # decrease the counter for this char
-            count[char] -= 1
-
-            # if the count goes below 0, t has too many of this char, not an anagram
-            if count[char] < 0:
-                return False
-
-            # if all counts balance out, strings are anagrams
-        return True
+        # Two strings are anagrams if their frequency dictionaries match
+        return countS == countT
 
 
-# O(N) space and time complexity for this solution
+# -------------------------------
+# Time Complexity: O(n)
+#   - One pass through the strings of length n to build the dictionaries
+#   - Dictionary comparison is O(1) if alphabet is fixed (e.g., 26 letters)
+#
+# Space Complexity: O(1) for fixed alphabet, O(k) in general
+#   - At most 26 entries per dictionary if only lowercase English letters
+#   - In general, O(k) where k = number of unique characters
+# -------------------------------

@@ -5,35 +5,19 @@ class Solution(object):
         :type k: int
         :rtype: List[int]
         """
+        # count each element with hashmap(counter)
+        # use a heap to find the k elements with the highest frequency
+        # then return them
 
-        count = {} # create an empty dictionary to store counts of each number
-        # looping through each number in the input list
-        for num in nums:
-            # for each number, update its frequency
-            # - count.get(num, 0) returns the current count if it exists, otherwise 0
-            # add 1 to increment the count
-            count[num] = 1 + count.get(num, 0)
 
-        # create an empty list to hold [frequency, number] pairs
-        arr =[]
+        if k == len(nums): # if the frequent element is the length of the array, all of the array are the same integer?
+            return nums
 
-        #iterate through each (num, cnt) pair from the dictionary
-        for num, cnt in count.items():
-            # append the pair as [count, num] so we can sort by count
-            arr.append([cnt, num])
-            # sort the list of count [count, num] pairs in ascending order by default
-            # after sorting, elements with smaller counts are at the front
-        arr.sort()
+        # build hashmap: character and how often it appears
+        # counts how many times each element appears
+        count = Counter(nums)
 
-        # prepare a result list to collect the top k frequent elements
-        res = []
-
-        # keep adding the frequent elements until we have k of them
-        while len(res) < k:
-
-            # arr.pop() removes the last element in arr (largest count, since arr is sorted ascending)
-            # [1] selects the number part (not the count)
-            res.append(arr.pop()[1])
-
-            # return final list of top k frequent numbers
-        return res
+        # build heap of top k frequent elements and convert it to output array
+        # the heap keeps the smallest or largest element at the top
+        # heap.nlargest builds temporary max-heap internally to find k largest elements
+        return heapq.nlargest(k, count.keys(), key=count.get)
