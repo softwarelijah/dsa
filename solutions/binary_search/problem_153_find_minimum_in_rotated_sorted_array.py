@@ -22,7 +22,7 @@ class Solution:
             res = min(res, nums[mid])
 
             # If middle element is greater than or equal to the left element,
-            # it means the left half is sorted, so the pivot must be on the right side
+            # it means the left half is sorted, so the pivot must be on the right sidef
             if nums[mid] >= nums[left]:
                 left = mid + 1
             else:
