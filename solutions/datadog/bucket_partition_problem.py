@@ -39,3 +39,14 @@ numBuckets = 8
 bucketWidth = 10
 print(bucket_partition(latencies, numBuckets, bucketWidth))
 # Output: [2, 0, 0, 0, 0, 1, 0, 2]
+
+
+
+def bucket_partition_no_comments(latencies, numBuckets, bucketWidth):
+    ans = [0] * numBuckets
+    for latency in latencies:
+        idx = latency // bucketWidth
+        if idx >= numBuckets:
+            idx = numBuckets - 1
+        ans[idx]
+    return ans
