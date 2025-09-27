@@ -48,5 +48,5 @@ def bucket_partition_no_comments(latencies, numBuckets, bucketWidth):
         idx = latency // bucketWidth
         if idx >= numBuckets:
             idx = numBuckets - 1
-        ans[idx]
+        ans[idx] += 1
     return ans
