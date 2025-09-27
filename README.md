@@ -1,4 +1,4 @@
-# NeetCode 150 – Data Structures & Algorithms
+# Data Structures & Algorithms
 
 ## Data Structures
 - Arrays
