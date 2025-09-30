@@ -10,6 +10,7 @@ Each node has:
 
 Task:
 - Return the total size of all files in the file system (sum of sizes of root and all descendants).
+- Return the size of all the children in the tree (2, 5, 6, 7) = 20
 
 We need to implement this in Python.
 """
@@ -25,8 +26,10 @@ def total_size(root):
         return root.size
     
     cur_size = root.size  # Include current node’s size too
-    for child in root.children:
-        cur_size += total_size(child)
+
+    # i is child
+    for i in root.children:
+        cur_size += total_size(i) # recursive call
     return cur_size
 
 
