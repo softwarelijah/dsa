@@ -38,3 +38,14 @@ class Solution:
                 pointer2 += 1  # Advance in slots2
 
         return []  # No shared slot long enough was found
+
+
+if __name__ == "__main__":
+    # Example input
+    slots1 = [[10, 50], [60, 120], [140, 210]]
+    slots2 = [[0, 15], [60, 70]]
+    duration = 8
+
+    solution = Solution()
+    result = solution.minAvailableDuration(slots1, slots2, duration)
+    print(result)
