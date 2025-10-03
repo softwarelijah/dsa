@@ -1,3 +1,5 @@
+from typing import List
+""""""
 """
 Problem: Bucket Partition
 -------------------------
@@ -14,39 +16,56 @@ Input:
   bucketWidth = 10
 Output:
   [2, 0, 0, 0, 0, 1, 0, 2]
+
 """
 
-def bucket_partition(latencies, numBuckets, bucketWidth):
-    # Initialize result array with 0 counts
-    ans = [0] * numBuckets
-    
-    for latency in latencies:
-        # Find the index of the bucket
-        idx = latency // bucketWidth
-        
-        # If latency exceeds last bucket, cap it to the last one
-        if idx >= numBuckets:
-            idx = numBuckets - 1
-        
-        ans[idx] += 1
-    
-    return ans
+
+# couple of notes:
+#
+
+class Solution():
+    def bucket_partition(self, latencies: List[int], numBuckets: int, bucketWidth: int) -> List:
+        # latencies - the input data were categorizing (list of numbers)
+        # numBuckets - how many categories/bins were creating
+        # bucketWidth - the size and range of each bucket
+        # think of this question as creating a histogram, we are dividing a continous range into discrete intervals.
+        # each bucket represents a range
 
 
-# Example usage
-latencies = [6, 7, 50, 100, 110]
-numBuckets = 8
-bucketWidth = 10
-print(bucket_partition(latencies, numBuckets, bucketWidth))
-# Output: [2, 0, 0, 0, 0, 1, 0, 2]
+        # initializing the result array
+        # this creates a list with numBuckets elements all initialized to 0
+        # so if numBuckets = 3, this looks like [0, 0, 0]
+        # we are starting with zero because were counting how many latencies fall into each bucket
+        # we start from zero and increment as we find latencies that belong in each bucket
+        # each position in ans, represents one bucket and the value at that position will be the count
+        # why pre allocate? its more effcient to create the array once at correct size rather than grow it dynamically with something like .append()
+        ans = [0] * numBuckets
+
+        # here we are just going through each latency one by one
+        # we will examine each latency and determine which bucket it belongs too
+        for latency in latencies:
+
+            # now we are going to calculate the bucket index
+            # uses integer division to determine which bucket the latency belongs too
+            # using integer division is important because it naturally groups ranges
+            # latency // bucketWidth tells us how many complete bucket widths fit into this latency
+            # which bucket range does this fall into
+            idx = latency // bucketWidth
 
 
+            # here we will be handling the overflow
+            # if the calculated index exceeds the number of buckets, we will force it into the last bucket
+            if idx >= numBuckets:
 
-def bucket_partition_no_comments(latencies, numBuckets, bucketWidth):
-    ans = [0] * numBuckets
-    for latency in latencies:
-        idx = latency // bucketWidth
-        if idx >= numBuckets:
-            idx = numBuckets - 1
-        ans[idx] += 1
-    return ans
+                # the - 1 will automatically place it in the last bucket since arrays are 0 indexed
+                idx = numBuckets - 1
+
+
+            # here we are incrementing the bucket count
+            # this adds 1 to the count in the appropriate bucket
+            # were counting the occurences and each latency adds one more item to its bucket
+            ans[idx] += 1
+
+            # return the final counts
+        return ans
+
