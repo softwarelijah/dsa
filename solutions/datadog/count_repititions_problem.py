@@ -38,15 +38,11 @@ Constraints:
 # paragraph = "the lion eats other sheep and the lion then sleeps while the sheep eats"
 # sol = Solution()
 # print(sol.countRepetitions(paragraph))  # Output: 5
-
-
-
-
-class Solution2:
-    def countRepitions2(self, paragragh2: str)  -> int:
+class Solution:
+    def count_repetitions(self, paragraph: str)  -> int:
         word_count = {}
         current_word = ""
-        for char in paragragh2:
+        for char in paragraph:
             if char.isalpha():
                 current_word += char.lower()
             else:
@@ -56,10 +52,13 @@ class Solution2:
         if current_word:
             word_count[current_word] = word_count.get(current_word, 0) + 1
 
-            # the count - 1 here is so that we do not include the first word
-            # if we want to incldue the first word here all we need to do is remove that -1
+        # the count - 1 here is so that we do not include the first word
+        # if we want to include the first word here all we need to do is remove that -1
         return sum(count - 1 for count in word_count.values() if count > 1)
 
-paragraph2 = "The quick brown fox jumps over the lazy dog. The dog barks at the fox. The fox runs away quickly."
-sol2 = Solution2()
-print(sol2.countRepitions2(paragraph2))
+
+
+
+example = "The quick brown fox jumps over the lazy dog. The dog barks at the fox. The fox runs away quickly quickly."
+sol = Solution()
+print(sol.count_repetitions(example))
