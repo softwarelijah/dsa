@@ -38,3 +38,21 @@ class Solution:
 paragraph = "the lion eats other sheep and the lion then sleeps while the sheep eats"
 sol = Solution()
 print(sol.countRepetitions(paragraph))  # Output: 5
+
+
+
+
+class Solution2:
+    def countRepitions2(self, paragragh2: str)  -> int:
+        word_count = {}
+        current_word = ""
+        for char in paragragh2:
+            if char.isalpha():
+                current_word += char.lowest()
+            else:
+                if current_word:
+                    word_count[current_word] = word_count.get(current_word, 0) + 1
+                    current_word = ""
+        if current_word:
+            word_count[current_word] = word_count.get(current_word, 0) + 1
+        return sum(count - 1 for count in word_count.values() if count > 1)
