@@ -122,9 +122,59 @@ class Solution:
         # so 3 and 2 pass
         # then -1 from 3 and 2 because we dont want to count the first occurrence so it will be [2, 1]
         # then just find the sum(2,1)
-
-
-
 example = "the lion eats other sheep and the lion then sleeps while the sheep eats"
 sol = Solution()
 print(sol.count_repetitions(example))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# count the words that repeat in a paragraph
+# don't count the first occurrence of the word
+# so if we have "the the the" we only want to return 2
+
+class Solution2():
+    def count_words(self, paragraph2: str) -> int:
+
+        word_count = {}
+        current_word = ""
+
+        for char in paragraph2:
+            if char.isalpha():
+                current_word += char.lower()
+            else:
+                if current_word:
+                    word_count[current_word] = word_count.get(current_word , 0) + 1
+                    current_word = ""
+
+        if current_word:
+            word_count[current_word] = word_count.get(current_word , 0) + 1
+
+        return sum(count - 1 for count in word_count.values() if count > 1)
+
+example = "the the the"
+sol = Solution2()
+print(sol.count_words(example))
