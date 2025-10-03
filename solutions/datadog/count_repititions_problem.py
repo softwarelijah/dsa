@@ -161,20 +161,19 @@ class Solution2():
 
         word_count = {}
         current_word = ""
-
         for char in paragraph2:
             if char.isalpha():
                 current_word += char.lower()
             else:
                 if current_word:
-                    word_count[current_word] = word_count.get(current_word , 0) + 1
+                    word_count[current_word] = word_count.get(current_word, 0) + 1
                     current_word = ""
-
         if current_word:
-            word_count[current_word] = word_count.get(current_word , 0) + 1
-
+            word_count[current_word] = word_count.get(current_word, 0) + 1
         return sum(count - 1 for count in word_count.values() if count > 1)
 
-example = "the the the"
+
+
+example = "the the the the the"
 sol = Solution2()
 print(sol.count_words(example))
