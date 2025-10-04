@@ -158,7 +158,6 @@ print(sol.count_repetitions(example))
 
 class Solution2():
     def count_words(self, paragraph2: str) -> int:
-
         word_count = {}
         current_word = ""
         for char in paragraph2:
