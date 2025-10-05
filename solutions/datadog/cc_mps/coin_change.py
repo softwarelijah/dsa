@@ -26,3 +26,19 @@ Example 3:
 Input: coins = [1, 5, 10, 25], amount = 0
 Output: 0
 """
+
+def coinChange(coins: List[int], amount: int) -> int:
+
+    coins.sort(reverse=True)
+    count = 0
+    remaining = amount
+    for coin in coins:
+        if remaining == 0:
+            break
+        num_coins = remaining // coin
+        count += num_coins
+        remaining -= num_coins * coin
+    return count
+
+res = (coinChange([1,5,10,25], 63))
+print(res)

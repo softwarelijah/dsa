@@ -1,3 +1,5 @@
+from typing import List
+
 """
 Problem: Bucket Partition
 -------------------------
@@ -16,3 +18,20 @@ Output:
   [2, 0, 0, 0, 0, 1, 0, 2]
 
 """""
+
+class Solution:
+
+    def bucket_partition(self, latencies: List[int], numBuckets:int, bucketWidth: int) -> List[int]:
+        ans = [0] * numBuckets
+
+        for latency in latencies:
+            idx = latency // bucketWidth
+            if idx >= numBuckets:
+                idx = numBuckets - 1
+            ans[idx] += 1
+        return ans
+
+
+sol = Solution()
+
+print(sol.bucket_partition([6, 7, 50, 100, 110], 8, 10))
