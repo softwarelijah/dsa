@@ -1,5 +1,3 @@
-from typing import List
-
 
 """
 Given the availability time slots arrays slots1 and slots2 of two people and a meeting duration duration, return the earliest time slot that works for both of them and is of duration duration.

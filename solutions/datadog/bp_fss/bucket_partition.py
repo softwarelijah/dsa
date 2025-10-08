@@ -1,4 +1,3 @@
-from typing import List
 
 """
 Problem: Bucket Partition
