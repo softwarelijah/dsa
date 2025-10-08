@@ -1,3 +1,4 @@
+from typing import List
 
 """
 Given the availability time slots arrays slots1 and slots2 of two people and a meeting duration duration, return the earliest time slot that works for both of them and is of duration duration.
@@ -15,3 +16,36 @@ Input: slots1 = [[10,50],[60,120],[140,210]], slots2 = [[0,15],[60,70]], duratio
 Output: []
 
 """""
+
+
+def meeting_scheduler(slot1: List[List[int]], slot2:List[List[int]], duration: int) -> List[int]:
+
+  slot1.sort()
+  slot2.sort()
+  p1 = 0
+  p2 = 0
+
+  while p1 < len(slot1) and p2 < len(slot2):
+    intersect_right = min(slot1[p1][1], slot2[p2][1])
+    intersect_left = max(slot1[p1][0], slot2[p2][0])
+
+    if intersect_right - intersect_left >= duration:
+      return [intersect_left, intersect_left + duration]
+    
+    if slot1[p1][1] < slot2[p2][1]:
+      p1 += 1
+    else:
+      p2 += 1
+  return []
+
+
+def test_meeting_scheduler():
+  result = meeting_scheduler([[10,50],[60,120],[140,210]], [[0,15],[60,70]], 8)
+  assert result == [60, 68]
+  print("input 1 passed")
+
+  result = meeting_scheduler([[10,50],[60,120],[140,210]], [[0,15],[60,70]], 12)
+  assert result == []
+  print("input 2 passed")
+
+test_meeting_scheduler()

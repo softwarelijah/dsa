@@ -1,3 +1,4 @@
+from typing import List
 
 """
 Problem StatementProblem Statement: US Coin Change
@@ -25,3 +26,38 @@ Example 3:
 Input: coins = [1, 5, 10, 25], amount = 0
 Output: 0
 """
+
+def coin_change(coins: List[int], amount: int) -> int:
+
+  # [25, 10, 5, 1]
+  coins.sort(reverse=True)
+  count = 0 
+  remaining = amount 
+
+  for coin in coins:
+    if remaining == 0: 
+      break
+
+    
+    num_coins = remaining // coin 
+    count += num_coins 
+    remaining -= num_coins * coin 
+  return count
+
+
+def coin_change_test():
+  result = coin_change([1, 5, 10, 25], 63)
+  assert result == 6, "test input 1"
+  print("input 1 passed")
+
+
+  result = coin_change([1, 5, 10, 25], 41)
+  assert result == 4, "test input 2"
+  print("input 2 passed")
+
+  result = coin_change([1, 5, 10, 25], 0)
+  assert result == 0, "test input 3"
+  print("input 3 passed")
+
+
+coin_change_test()
