@@ -27,37 +27,31 @@ Input: coins = [1, 5, 10, 25], amount = 0
 Output: 0
 """
 
-def coin_change(coins: List[int], amount: int) -> int:
+def coinChange(coins: List[int], amount: int) -> int:
 
-  # [25, 10, 5, 1]
-  coins.sort(reverse=True)
-  count = 0 
-  remaining = amount 
-
+  # we know that the coins are [1, 5, 10, 25]
+  coins.sort(reverse=True) # so we can check biggest coins first (25, 10, 5, 1)
+  remaining = amount # use to check how much more money is left
+  count = 0 # for how many coins we have so if amount is 50, this will be 2 (2 quarters)
   for coin in coins:
-    if remaining == 0: 
+    if remaining == 0:
       break
 
-    
-    num_coins = remaining // coin 
-    count += num_coins 
-    remaining -= num_coins * coin 
+    num_coins = remaining // coin # 50 // 25 == 2
+    count += num_coins
+    remaining -= num_coins * coin
   return count
 
 
+
 def coin_change_test():
-  result = coin_change([1, 5, 10, 25], 63)
-  assert result == 6, "test input 1"
-  print("input 1 passed")
 
+  result = coinChange([1, 5, 10, 25], 50)
+  assert result == 2, "test 1 failed: amount: 50, should return 2"
+  print("test 1 passed: returned 2")
 
-  result = coin_change([1, 5, 10, 25], 41)
-  assert result == 4, "test input 2"
-  print("input 2 passed")
-
-  result = coin_change([1, 5, 10, 25], 0)
-  assert result == 0, "test input 3"
-  print("input 3 passed")
-
+  result1 = coinChange([1, 5, 10, 25], 0)
+  assert result1 == 0, "test 2 failed: amount: 0, should return 0"
+  print("test 2 passed: returned 0")
 
 coin_change_test()

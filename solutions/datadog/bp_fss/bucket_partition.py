@@ -1,5 +1,4 @@
 from typing import List
-
 """
 Problem: Bucket Partition
 -------------------------
@@ -19,26 +18,22 @@ Output:
 
 """""
 
-def bucket_partition(latencies: List[int], numBuckets: int, bucketWidth: int) -> List[int]:
-
-  ans = [0] * numBuckets
+def bucketPartition(latencies: List[int], numBucket: int, bucketWidth: int) -> List[int]:
+  ans = [0] * numBucket
   for latency in latencies:
-    idx  = latency // bucketWidth
-    if idx >= numBuckets:
-      idx = numBuckets - 1
+    idx = latency // bucketWidth
+    if idx >= numBucket:
+      idx = numBucket - 1
     ans[idx] += 1
   return ans
 
-def test_bucket_partition():
-  # empty latency test passed
-  result = bucket_partition([], 5, 10)
-  assert result == [0, 0, 0, 0, 0], "Empty array should return all zeroes"
-  print("empty latency test passed")
+def bucket_partition_test():
+  result = bucketPartition([6,7,50,100,110], 8, 10)
+  assert result == [2, 0, 0, 0, 0, 1, 0, 2], "input 1"
+  print("input 1 passed")
 
+  result = bucketPartition([], 8, 10)
+  assert result == [0, 0, 0, 0, 0, 0, 0, 0]
+  print("input 2 passed: empty latencies")
 
-  # example input passed 
-  result = bucket_partition([6, 7, 50, 100, 110], 8, 10)
-  assert result == [2,0,0,0,0,1,0,2], "example input"
-  print("example input passed") 
-
-test_bucket_partition()
+bucket_partition_test()
