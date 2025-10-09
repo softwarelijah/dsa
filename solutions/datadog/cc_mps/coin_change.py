@@ -57,6 +57,23 @@ def coin_change_test():
 coin_change_test()
 
 """
+DATA STRUCTURES:
+- Array (List): coins array stores available coin denominations
+  - Sorted in descending order to enable greedy selection
+  - Provides O(1) access during iteration
+- Integer Variables: remaining (tracks amount left), count (accumulates total coins), num_coins (coins of current denomination)
+
+ALGORITHMS:
+- Greedy Algorithm: Make locally optimal choice at each step by selecting the largest coin that fits
+  - Process coins from largest to smallest denomination
+  - For each coin, use as many as possible (remaining // coin)
+  - Subtract used value from remaining amount
+  - Works optimally for canonical coin systems like US coins
+- Sorting: Order coins in descending order to ensure largest coins are tried first
+  - Uses reverse sort: coins.sort(reverse=True)
+- Integer Division: Calculate maximum number of coins of each denomination that fit in remaining amount
+  - Formula: num_coins = remaining // coin
+
 TIME COMPLEXITY: O(n log n + n)
 - Where n is the number of coin denominations
 - Sorting the coins array: O(n log n)

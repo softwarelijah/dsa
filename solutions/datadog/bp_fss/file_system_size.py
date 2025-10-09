@@ -51,6 +51,34 @@ def total_size_test():
 total_size_test()
 
 """
+DATA STRUCTURES:
+- N-ary Tree (General Tree): Node class represents a tree structure where each node can have multiple children
+  - Each node contains: name (string), size (integer), children (list of Node references)
+  - Unlike binary trees, nodes can have any number of children (0 to many)
+  - Tree structure represents hierarchical file system organization (directories and files)
+- List: children attribute stores references to child nodes
+  - Allows iteration over all children of a node
+  - Dynamic size accommodates varying numbers of children per node
+- Recursion Call Stack: Implicitly maintains the traversal path from root to current node
+
+ALGORITHMS:
+- Depth-First Search (DFS): Post-order traversal to explore all nodes in the tree
+  - Visits all children before processing the current node
+  - Ensures child subtree sizes are computed before parent needs them
+  - Base case: leaf nodes (no children) return their own size
+  - Recursive case: accumulate sizes from all children plus current node
+- Recursion: Function calls itself on each child node to traverse the entire tree
+  - Each call processes one subtree and returns its total size
+  - Results bubble up from leaves to root
+- Accumulation Pattern: Aggregate values from multiple children
+  - Initialize with current node's size
+  - Iterate through children list, adding each child's subtree size
+  - Returns cumulative total for the entire subtree
+- Bottom-Up Computation: Calculate results from leaves upward to root
+  - Leaf nodes return base values (their own size)
+  - Parent nodes combine children's results with their own value
+  - Root receives the final accumulated total
+
 TIME COMPLEXITY: O(n)
 - Where n is the total number of nodes in the file system tree
 - Each node is visited exactly once during the recursive traversal

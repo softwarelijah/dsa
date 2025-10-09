@@ -70,6 +70,33 @@ def maxPathSumTest():
 maxPathSumTest()
 
 """
+DATA STRUCTURES:
+- Binary Tree: TreeNode class represents nodes with val, left, and right pointers
+  - Each node contains an integer value and references to left and right children
+  - Tree structure allows hierarchical path exploration
+- Array (List): res = [root.val] stores the global maximum path sum
+  - Single-element list used as a mutable container to share state between nested function scope
+  - Allows the inner dfs function to update the global maximum without using nonlocal keyword
+- Recursion Call Stack: Implicitly stores the current path from root to current node during DFS
+
+ALGORITHMS:
+- Depth-First Search (DFS): Post-order traversal to explore all paths in the tree
+  - Visits left subtree, then right subtree, then processes current node
+  - Base case: null nodes return 0 (no contribution to path sum)
+  - Recursive case: compute max path sums from both subtrees
+- Divide and Conquer: Break problem into subproblems for left and right subtrees
+  - Combine results from subtrees with current node to find optimal path
+- Greedy Selection: At each node, ignore negative path contributions
+  - Uses max(leftMax, 0) and max(rightMax, 0) to discard negative sums
+  - A negative path would decrease total sum, so it's better to exclude it
+- Dynamic Programming (Implicit): Each node's computation depends on optimal solutions from its children
+  - Memoization isn't needed because tree structure ensures no repeated subproblems
+- Path Sum Calculation: Two key values computed at each node:
+  1. Path through node: root.val + leftMax + rightMax (can use both children - inverted V shape)
+  2. Path to parent: root.val + max(leftMax, rightMax) (can only extend one branch upward)
+- Global Maximum Tracking: Update res[0] with maximum path sum found at any node
+  - Ensures we capture the best path even if it doesn't pass through root
+
 TIME COMPLEXITY: O(n)
 - Where n is the number of nodes in the binary tree
 - The DFS function visits each node exactly once

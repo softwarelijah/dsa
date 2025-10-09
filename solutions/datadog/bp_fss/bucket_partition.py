@@ -39,6 +39,20 @@ def bucket_partition_test():
 bucket_partition_test()
 
 """
+DATA STRUCTURES:
+- Array (List): ans array stores the count of latencies for each bucket
+  - Fixed-size array initialized with zeros
+  - Provides O(1) access and update by index
+  - Index represents bucket number, value represents frequency count
+
+ALGORITHMS:
+- Bucketing/Hashing: Map each latency value to a bucket index using integer division
+  - Formula: bucket_index = latency // bucketWidth
+  - This distributes values into ranges [0, bucketWidth), [bucketWidth, 2*bucketWidth), etc.
+- Clamping: Ensure overflow values (latency >= numBucket * bucketWidth) go to the last bucket
+  - Uses conditional check: if idx >= numBucket, set idx = numBucket - 1
+- Frequency Counting: Increment the count in the appropriate bucket for each latency
+
 TIME COMPLEXITY: O(n + b)
 - Where n is the length of latencies and b is numBucket
 - Initializing the ans array with zeros: O(b)

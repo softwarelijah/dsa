@@ -45,6 +45,19 @@ def test_count_repetitions():
 test_count_repetitions()
 
 """
+DATA STRUCTURES:
+- Hash Map (Dictionary): word_count dictionary maps each word to its frequency count
+  - Provides O(1) average-case lookup, insertion, and update operations
+  - Key: word (string), Value: count (integer)
+- String: Used for current_word to build words character by character
+  - Mutable accumulation of characters until a word boundary is found
+
+ALGORITHMS:
+- Single Pass Iteration: Traverse the input paragraph once, character by character
+- Word Parsing: Build words by accumulating alphabetic characters and reset on non-alphabetic characters
+- Frequency Counting: Use hash map to track occurrences of each word (case-insensitive)
+- Aggregation: Sum up (count - 1) for all words that appear more than once
+
 TIME COMPLEXITY: O(n + w)
 - Where n is the length of the paragraph and w is the number of unique words
 - We iterate through every character in the paragraph once: O(n)

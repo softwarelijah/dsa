@@ -51,6 +51,31 @@ def test_meeting_scheduler():
 test_meeting_scheduler()
 
 """
+DATA STRUCTURES:
+- Array (List of Lists): slot1 and slot2 represent time intervals as [start, end] pairs
+  - Each inner array is a 2-element list representing a time slot
+  - Sorted in ascending order by start time to enable chronological processing
+- Two Pointers: p1 and p2 track current positions in slot1 and slot2 respectively
+  - Enable simultaneous traversal of both sorted arrays without nested loops
+- Integer Variables: intersect_left, intersect_right store boundaries of interval intersection
+
+ALGORITHMS:
+- Two-Pointer Technique: Traverse two sorted arrays simultaneously to find overlapping intervals
+  - Move pointers independently based on which interval ends first
+  - Avoids O(n*m) brute force comparison of all pairs
+- Interval Intersection: Find overlapping portion of two time slots
+  - Left boundary: max(start1, start2) - the later of the two start times
+  - Right boundary: min(end1, end2) - the earlier of the two end times
+  - Valid intersection when right >= left
+- Greedy Algorithm: Return the first valid meeting slot found
+  - Since arrays are sorted, the first match is automatically the earliest possible time
+- Sorting: Pre-process both slot arrays in ascending order by start time
+  - Enables chronological comparison and guarantees earliest slot is found first
+- Pointer Advancement Strategy: Move the pointer whose slot ends earlier
+  - If slot1[p1] ends before slot2[p2], increment p1 (no future overlap possible with current slot1)
+  - Otherwise increment p2
+  - Ensures all potential overlaps are checked
+
 TIME COMPLEXITY: O(n log n + m log m)
 - Where n is the length of slot1 and m is the length of slot2
 - Sorting slot1: O(n log n)
