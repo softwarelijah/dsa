@@ -14,3 +14,87 @@ Input: root = [-10,9,20,null,null,15,7]
 Output: 42
 Explanation: The optimal path is 15 -> 20 -> 7 with a path sum of 15 + 20 + 7 = 42.
 """""
+
+class TreeNode():
+  def __init__(self, val=0, left=None, right=None):
+    self.val = val
+    self.left = left
+    self.right = right
+
+
+def maxPathSum(root: Optional[TreeNode]) -> int:
+
+  res = [root.val]
+
+  def dfs(root):
+    if not root:
+      return 0
+    
+    leftMax = dfs(root.left)
+    rightMax = dfs(root.right)
+
+    leftMax = max(leftMax, 0)
+    rightMax = max(rightMax, 0)
+
+    res[0] = max(res[0], root.val + leftMax + rightMax)
+
+    return root.val + max(leftMax, rightMax)
+  
+  dfs(root)
+  return res[0]
+
+
+
+
+def maxPathSumTest():
+
+  root1 = TreeNode(10)
+  result = maxPathSum(root1)
+  assert result == 10, "test 1 failed"
+  print("test 1 passed")
+
+
+
+
+  #  [-10,9,20,null,null,15,7]
+  root2 = TreeNode(-10)
+  root2.left = TreeNode(-9)
+  root2.right = TreeNode(20)
+  root2.right.left = TreeNode(15)
+  root2.right.right = TreeNode(7)
+
+  result = maxPathSum(root2)
+  assert result == 42, "test 2 input failed"
+  print("test 2 input passed")
+
+maxPathSumTest()
+
+"""
+TIME COMPLEXITY: O(n)
+- Where n is the number of nodes in the binary tree
+- The DFS function visits each node exactly once
+- At each node, we perform constant-time operations:
+  - Two recursive calls (which visit children)
+  - Comparison and arithmetic operations: O(1)
+- Total: O(n) since we touch every node once
+
+SPACE COMPLEXITY: O(h)
+- Where h is the height of the binary tree
+- Space is used by the recursion call stack
+- In the worst case (skewed tree), h = n, so space is O(n)
+- In the best case (balanced tree), h = log(n), so space is O(log n)
+- Average case for a balanced tree: O(log n)
+- The res array uses O(1) space (single element)
+- Total: O(h) where h is the height of the tree
+
+Algorithm Explanation:
+- This uses post-order DFS traversal (visit children before processing current node)
+- For each node, we calculate two things:
+  1. The maximum path sum that PASSES THROUGH this node (root.val + leftMax + rightMax)
+     - This can use both left and right subtrees, forming an inverted V shape
+  2. The maximum path sum we can RETURN to the parent (root.val + max(leftMax, rightMax))
+     - This can only go down one side, as a path can't split at a node and continue upward
+- We use max(leftMax, 0) and max(rightMax, 0) to ignore negative paths (better to not include them)
+- The res[0] variable tracks the global maximum path sum found at any node
+- Using a list [root.val] allows us to mutate the value inside the nested function (closure workaround)
+"""

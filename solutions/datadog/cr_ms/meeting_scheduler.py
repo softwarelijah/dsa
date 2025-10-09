@@ -49,3 +49,32 @@ def test_meeting_scheduler():
   print("input 2 passed")
 
 test_meeting_scheduler()
+
+"""
+TIME COMPLEXITY: O(n log n + m log m)
+- Where n is the length of slot1 and m is the length of slot2
+- Sorting slot1: O(n log n)
+- Sorting slot2: O(m log m)
+- Two-pointer traversal: O(n + m)
+  - Each pointer moves forward at most n or m times respectively
+  - Each iteration performs constant-time operations (comparisons, min/max calculations)
+- Total: O(n log n + m log m) since sorting dominates
+
+SPACE COMPLEXITY: O(1) or O(n + m) depending on sorting implementation
+- If the sort is in-place (like Python's Timsort in worst case): O(n + m) auxiliary space
+- If we consider the sort as modifying input in-place: O(1) extra space
+- Additional variables (p1, p2, intersect_right, intersect_left): O(1)
+- No additional data structures that scale with input size
+
+Typically reported as O(1) auxiliary space beyond the input arrays.
+
+Algorithm Explanation:
+- This is a classic two-pointer interval intersection problem
+- We sort both slot arrays to process them in chronological order
+- For each pair of slots, we find the intersection using:
+  - Left boundary: max(start1, start2) - the later start time
+  - Right boundary: min(end1, end2) - the earlier end time
+- If the intersection is large enough for the meeting duration, we return it
+- We advance the pointer whose slot ends earlier to look for the next potential intersection
+- This greedy approach works because we process slots in order and return the first valid match
+"""

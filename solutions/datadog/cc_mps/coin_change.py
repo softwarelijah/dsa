@@ -55,3 +55,29 @@ def coin_change_test():
   print("test 2 passed: returned 0")
 
 coin_change_test()
+
+"""
+TIME COMPLEXITY: O(n log n + n)
+- Where n is the number of coin denominations
+- Sorting the coins array: O(n log n)
+- Iterating through all coins: O(n)
+- Each iteration performs constant-time operations (division, addition, subtraction): O(1)
+- Total: O(n log n)
+
+However, since the problem specifies coins = [1, 5, 10, 25] (fixed set of 4 coins):
+- Sorting 4 elements is effectively O(1) constant time
+- Iterating through 4 coins is O(1) constant time
+- Therefore, for this specific problem: O(1)
+
+SPACE COMPLEXITY: O(1)
+- Only a constant amount of extra space is used (remaining, count, num_coins variables)
+- The sorting is done in-place on the input array
+- No additional data structures are created that scale with input size
+- Total space: O(1)
+
+Note: This greedy approach works optimally for US coin denominations because they form
+a "canonical" coin system. However, the greedy algorithm does NOT always produce the
+optimal solution for arbitrary coin sets. For example, with coins = [1, 3, 4] and 
+amount = 6, greedy gives 3 coins (4 + 1 + 1) but optimal is 2 coins (3 + 3).
+For arbitrary coin sets, dynamic programming would be needed to guarantee optimal results.
+"""

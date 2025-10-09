@@ -49,3 +49,30 @@ def total_size_test():
   print("test 2 passed (2 children + root = 65) ")
 
 total_size_test()
+
+"""
+TIME COMPLEXITY: O(n)
+- Where n is the total number of nodes in the file system tree
+- Each node is visited exactly once during the recursive traversal
+- At each node, we perform constant-time operations (addition) plus recursive calls to children
+- Even though we iterate through children at each node, the total number of iterations
+  across all recursive calls equals n (since each node is processed once)
+- Total: O(n)
+
+SPACE COMPLEXITY: O(h)
+- Where h is the height/depth of the tree
+- Space is used by the recursion call stack
+- In the worst case (completely unbalanced tree, like a linked list), h = n, so space is O(n)
+- In the best case (perfectly balanced tree), h = log(n), so space is O(log n)
+- The curr_size variable at each level uses O(1) space
+- Total: O(h) where h is the height of the tree
+
+Alternative iterative solution would use O(n) space for an explicit stack/queue but O(1) call stack.
+
+Algorithm Explanation:
+- This uses a post-order DFS traversal (process children before using their results)
+- Base case: if a node has no children, return its own size
+- Recursive case: sum the current node's size with the total sizes of all its children
+- Each recursive call returns the total size of the subtree rooted at that node
+- This naturally accumulates sizes from leaves up to the root
+"""

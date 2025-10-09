@@ -43,3 +43,25 @@ def test_count_repetitions():
   print("test passed")
 
 test_count_repetitions()
+
+"""
+TIME COMPLEXITY: O(n + w)
+- Where n is the length of the paragraph and w is the number of unique words
+- We iterate through every character in the paragraph once: O(n)
+- We iterate through the word_count dictionary at the end to compute the sum: O(w)
+- Since w <= n (number of unique words can't exceed total characters), overall time is O(n)
+
+SPACE COMPLEXITY: O(n)
+- word_count dictionary stores at most w unique words, where w is the number of unique words
+- In the worst case (all single-character words with spaces), w approaches n/2
+- current_word can grow up to the length of the longest word, which is at most n
+- Therefore, space complexity is O(n) in the worst case
+
+Note: String concatenation (current_word += char) technically creates a new string each time,
+which could make the time complexity O(n²) in the worst case for a single very long word.
+For better performance with very long words, you could use a list and join at the end:
+current_word = []
+current_word.append(char.lower())
+word = ''.join(current_word)
+However, for typical paragraph inputs with reasonably-sized words, the current approach is fine.
+"""

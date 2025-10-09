@@ -37,3 +37,22 @@ def bucket_partition_test():
   print("input 2 passed: empty latencies")
 
 bucket_partition_test()
+
+"""
+TIME COMPLEXITY: O(n + b)
+- Where n is the length of latencies and b is numBucket
+- Initializing the ans array with zeros: O(b)
+- Iterating through all latencies and placing them in buckets: O(n)
+- Each bucket assignment is O(1) (integer division and array access)
+- Total: O(n + b)
+
+SPACE COMPLEXITY: O(b)
+- Where b is numBucket
+- The ans array stores exactly numBucket elements: O(b)
+- Only a constant amount of additional space is used (idx, latency variables): O(1)
+- Total space: O(b)
+
+Note: This solution is optimal for the problem since we must:
+1. Create an output array of size numBucket (unavoidable O(b) space)
+2. Process each latency at least once (unavoidable O(n) time)
+"""
