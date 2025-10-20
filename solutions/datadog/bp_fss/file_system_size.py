@@ -108,3 +108,37 @@ Algorithm Explanation:
 - Each recursive call returns the total size of the subtree rooted at that node
 - This naturally accumulates sizes from leaves up to the root
 """
+
+
+
+"""
+NEW FILE SYSTEM SIZE QUESTION
+- This one uses a dictionary, instead of a node class
+- Algo essentially remains the same
+- The input below is what we are given instead
+
+root = {
+  "name": "root", "size": 0,
+  "children": [
+    {"name": "file1.txt", "size": 10, "children": []},
+    {"name": "file2.txt", "size": 20, "children": []},
+    {"name": "subfolder", "size": 0,
+      "children": [
+        {"name": "subfile1.txt", "size": 5, "children": []},
+        {"name": "subfile2.txt", "size": 15, "children": []}
+      ]
+    }
+  ]
+}
+"""
+
+def file_system_size(root) -> int:
+  if not root["children"]:
+    return root["size"]
+  curr = root["size"]
+  for child in root["children"]:
+    curr += file_system_size(root["children"])
+  return curr
+
+
+
