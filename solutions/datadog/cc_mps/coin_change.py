@@ -37,7 +37,7 @@ def coinChange(coins: List[int], amount: int) -> int:
     if remaining == 0:
       break
 
-    num_coins = remaining // coin # 50 // 25 == 2
+    num_coins = remaining // coin # 50 // 25 == 2, this line is very much needed ( i tried without it and it does not work)
     count += num_coins
     remaining -= num_coins * coin
   return count
