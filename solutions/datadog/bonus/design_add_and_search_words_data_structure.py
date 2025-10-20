@@ -27,18 +27,6 @@ wordDictionary.search(".ad"); // return True
 wordDictionary.search("b.."); // return True
 """""
 
-class WordDictionary:
-
-    def __init__(self):
-        return None
-
-
-    def addWord(self, word: str) -> None:
-        return None
-
-
-    def search(self, word: str) -> bool:
-        return False
 
 
 

@@ -1,16 +1,20 @@
 """
 Problem: File System Total Size
 -------------------------------
-You are given a file system represented as a tree structure.
+Problem 2: Total Size of File System
+Description
 
-Each node has:
-  - name (string)
-  - size (int)
-  - children (list of Nodes)
+You are given the root of a file system represented as a tree. Each node has the following properties:
 
-Task:
-- Return the total size of all files in the file system (sum of sizes of root and all descendants).
-- Return the size of all the children in the tree (2, 5, 6, 7) = 20
+name: a string representing the name of the file or directory
+
+size: an integer representing the size of the file (0 for directories)
+
+children: a list of child nodes (empty if it is a file)
+
+Return the total size of the file system rooted at the given node.
+If the node is a file, return its size.
+If the node is a directory, recursively sum the sizes of all its children.
 
 """""
 
