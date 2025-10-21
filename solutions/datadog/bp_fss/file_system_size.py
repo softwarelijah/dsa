@@ -133,12 +133,84 @@ root = {
 """
 
 def file_system_size(root) -> int:
-  if not root["children"]:
-    return root["size"]
-  curr = root["size"]
-  for child in root["children"]:
-    curr += file_system_size(root["children"])
-  return curr
+    if not root:
+        return 0
+    
+    if not root.get("children"):
+        return root.get("size", 0)
+    
+    curr = root.get("size", 0)
+    for child in root.get("children", []):
+        curr += file_system_size(child)
+    return curr
 
 
 
+def test_file_system_size():
+
+
+# TEST 1
+  result1 = file_system_size(root = {
+  "name": "root", "size": 0,
+  "children": [
+    {"name": "file1.txt", "size": 10, "children": []},
+    {"name": "file2.txt", "size": 20, "children": []},
+    {"name": "subfolder", "size": 0,
+      "children": [
+        {"name": "subfile1.txt", "size": 5, "children": []},
+        {"name": "subfile2.txt", "size": 15, "children": []}
+      ]
+    }
+  ]
+})
+  assert result1 == 50, "test 1 failed"
+  print(result1, "test 1 passed")
+
+
+
+# TEST 2
+  root2 = {}
+  result2 = file_system_size(root2)
+  assert result2 == 0, "test 2 failed"
+  print(result2, "test 2 passed")
+
+
+# TEST 3
+  root3 = None
+  result3 = file_system_size(root3)
+  assert result3 == 0, "test 3 failed"
+  print(result3, "test 3 passed")
+
+
+# TEST 4
+  root4 = {"name": "empty_folder", "size": 0, "children": []}
+  result4 = file_system_size(root4)
+  assert result4 == 0, "test 4 failed"
+  print(result4, "test 4 passed")
+
+
+# TEST 5
+  root5 = {"name": "folder", "size": 10, "children": []}
+  result5 = file_system_size(root5)
+  assert result5 == 10, "test 5 failed"
+  print(result5, "test 5 passed")
+
+
+# TEST 6
+  root6 = {
+     
+     "name": "folder",
+     "size": 10, 
+     "children": [
+        {"name": "folder1", "size": 50, "children": []},
+        {"name": "folder2", "size": 10, "children": [
+           {"name": "folder3", "size": 1, "children": []}
+        ]}
+     ]
+  }
+
+  result6 = file_system_size(root6)
+  assert result6 == 71, "test 6 failed"
+  print(result6, "test 6 passed")
+
+test_file_system_size()
