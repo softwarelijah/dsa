@@ -123,49 +123,122 @@ class Node:
         self.val = val
         self.children = children if children is not None else []
 """
-class Node():
+
+# Clarifications before starting the problem:
+# A path is a sequence of nodes where every consecutive pair is a direct parent-child
+    # this means you can move up from a child to its parent and down to another child as long as the sequence is continous and doesnt jump
+
+# the path can start and end anywhere (does not need to include the root)
+# must be at least one node
+# must be a simple path (no cycles or revisiting nodes)
+# GOAL: maximum sum over all of the valid paths
+
+# Key observation: at any single node, the best "through this node" path can at most take:
+    # one downward branch from one child
+    # optionally another downward branch from a different child (path goes from child1 -> node -> child2)
+# you can't take 3 or more children at the sanem node, because that would fork that path (not allowed) so at each node, only the top two child contributions matter
+
+
+
+# BIG PICTURE OF THE ALGO:
+
+# We do a DFS, for each node we compute:
+    # the best sum of a path that starts at this node and goes down into exactly one subtree
+    # through-node best to possibly update the global answer
+
+# We keep a global maximum across all nodes
+
+# why initialize the global max to the root's value? 
+# if all values are negative, the best path is the single node with the largest (least negative) value:
+# initializing with some node value ensures we dont defaukt to 0, (which would be illegal since the path must include one node)
+
+
+class Node:
     def __init__(self, val=0, children=None):
         self.val = val
         self.children = children if children is not None else []
 
-class Solution:
-    def maxPathSum(self, root) -> int:
+
+
+# since we are starting at the root, we can only go down one branch. there is no backtracking allowed in paths
+# we will be completing this problem bottom up using DFS 
+
+class Solution():
+    def maxPathSum(self, root: Node) -> int:
         if not root:
             return 0
 
-        res = [root.val]
 
-        def dfs(node) -> int:
+        def dfs(node: Node) -> int:
             if not node:
                 return 0
 
-            best1 = 0  
-            best2 = 0  
+            # best child will be used a single cumulative number that represents the best total path sum
+            best_child = 0 
 
+            # in this snippet we dont work with the root
+            # this is all on the children
             for child in node.children:
                 child_down = dfs(child)
 
+                # this line is removing all negatives, since we are trying to find the maximum, no negatives will be counted for
+                # "if the best path sum going down from this child is negative, ignore it and treat it as 0"
                 child_down = max(child_down, 0)
- 
-                if child_down > best1:
-                    best2 = best1
-                    best1 = child_down
-                elif child_down > best2:
-                    best2 = child_down
 
-            res[0] = max(res[0], node.val + best1 + best2)
+                # keeps track of the single best child so far
+                # so once the loop ends, best child contains the maximum contribution from all children
+                # we then return node.val + best_child which is the nodes best root starting path
+                best_child = max(child_down, best_child)
 
-            return node.val + best1
 
-        dfs(root)
-        return res[0]
+            return node.val + best_child # root + best child, here is when we finally work with the root
+
+        # this is where our building comes together into the final answer 
+        # "start the recursion at the root node, and calculate the maximum downward path sum starting from the root"
+        # or you can think of it as
+        # "run a chain reaction of recursive calls throughout the entire tree, gather all the best downward paths and return the single largest total from the root"
+        return dfs(root)
 
 
 def test_max_path_sum():
+
+    # this tree looks like
+    #     1
+    #    /|\
+    #   2 3 4
+    # so 1 + 4 is the maximum path sum of this tree
     sol = Solution()
     root1 = Node(1, [Node(2), Node(3), Node(4)])
-    resultmps2 = sol.maxPathSum2(root1)
-    assert resultmps2 == 8, "test 1 failed"
-    print(resultmps2, "test 1 passed")
+    result = sol.maxPathSum(root1)
+    assert result == 5, "test 1 failed"
+    print(result, "test 1 passed")
+
+#       5
+#      /|\
+#    -2 3 -1
+    root2 = Node(5, [Node(-2), Node(3), Node(-1)])
+    result2 = sol.maxPathSum(root2)
+    assert result2 == 8, "test 2 failed"
+    print(result2, "test 2 passed")
+
+#       1
+#      / \
+#     2   3
+#    /|
+#   4 5
+    root3 = Node(1, [Node(2, [Node(4), Node(5)]), Node(3)])
+    result3 = sol.maxPathSum(root3)
+    assert result3 == 8, "test 3 failed"
+    print(result3, "test 3 passed")
+
+    #   10
+    #    |
+    #   -5
+    #    |
+    #    20    
+    root4 = Node(10, [Node(-5, [Node(20)])])
+    result4 = sol.maxPathSum(root4)
+    assert result4 == 25, "test 4 failed"
+    print(result4, "test 4 passed")
 
 test_max_path_sum()
