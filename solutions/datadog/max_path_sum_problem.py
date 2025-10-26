@@ -197,7 +197,7 @@ class Solution():
         # "start the recursion at the root node, and calculate the maximum downward path sum starting from the root"
         # or you can think of it as
         # "run a chain reaction of recursive calls throughout the entire tree, gather all the best downward paths and return the single largest total from the root"
-        return dfs(root)
+        return max(dfs(root), 0)
 
 
 def test_max_path_sum():

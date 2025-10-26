@@ -1,16 +1,16 @@
 from typing import List
 
 """
-Problem StatementProblem Statement: US Coin Change
+US Coin Change (Return Coin Counts)
 
-You are given an integer array coins representing US coin denominations 
-[1, 5, 10, 25] (penny, nickel, dime, quarter) and an integer amount 
-representing a total amount of money in cents.
+You are given an integer array coins representing the US coin denominations [1, 5, 10, 25] — corresponding to pennies, nickels, dimes, and quarters — and an integer amount representing a total amount of money in cents.
 
-Return the fewest number of coins that you need to make up that amount 
-using a greedy algorithm.
+Your task is to use a greedy algorithm to determine the fewest number of coins needed to make up that amount.
+Instead of returning just the total number of coins, return a list of counts representing how many of each coin type are used.
 
-You may assume that you have an infinite number of each kind of coin.
+The list should follow the order [quarters, dimes, nickels, pennies].
+
+You may assume that you have an infinite number of each type of coin, and that the greedy approach always yields an optimal solution for standard US denominations.
 
 Example 1:
 Input: coins = [1, 5, 10, 25], amount = 63
@@ -27,20 +27,28 @@ Input: coins = [1, 5, 10, 25], amount = 0
 Output: 0
 """
 
-def coinChange(coins: List[int], amount: int) -> int:
+from typing import List
 
-  # we know that the coins are [1, 5, 10, 25]
-  coins.sort(reverse=True) # so we can check biggest coins first (25, 10, 5, 1)
-  remaining = amount # use to check how much more money is left
-  count = 0 # for how many coins we have so if amount is 50, this will be 2 (2 quarters)
-  for coin in coins:
-    if remaining == 0:
-      break
+def coinChange(coins: List[int], amount: int) -> List[int]:
+    # We know US coins are [1, 5, 10, 25]
+    coins.sort(reverse=True)  # [25, 10, 5, 1]
+    
+    remaining = amount
+    coin_counts = []  # list to track how many of each coin is used
+    
+    for coin in coins:
+        if remaining == 0:
+            coin_counts.append(0)
+            continue
+        
+        num_coins = remaining // coin
+        coin_counts.append(num_coins)
+        remaining -= num_coins * coin
 
-    num_coins = remaining // coin # 50 // 25 == 2, this line is very much needed ( i tried without it and it does not work)
-    count += num_coins
-    remaining -= num_coins * coin
-  return count
+    # coin_counts corresponds to [quarters, dimes, nickels, pennies] 
+    # since we sorted coins descending
+    return coin_counts
+
 
 
 
